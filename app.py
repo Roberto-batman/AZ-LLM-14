@@ -1,9 +1,12 @@
-# First: SQLite patch for Streamlit Cloud
+
+import sys
 import os
+
+# Apply SQLite patch for Linux environments
 if os.environ.get('STREAMLIT_SERVER_ENVIRONMENT') == 'cloud':
     __import__('pysqlite3')
-    import sys
     sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
 
 # THEN do other imports
 import streamlit as st
