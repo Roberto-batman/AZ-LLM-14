@@ -1,13 +1,14 @@
-import streamlit as st
+# First: SQLite patch for Streamlit Cloud
 import os
-import dotenv
-import uuid
-
-# Only apply the workaround if running on Streamlit Cloud
-if os.environ.get('STREAMLIT_CLOUD') == 'true':
+if os.environ.get('STREAMLIT_SERVER_ENVIRONMENT') == 'cloud':
     __import__('pysqlite3')
     import sys
     sys.modules['sqlite3'] = sys.modules.pop('pysqlite3')
+
+# THEN do other imports
+import streamlit as st
+import uuid
+import dotenv
 
 from langchain_openai import ChatOpenAI, AzureChatOpenAI
 from langchain_anthropic import ChatAnthropic
